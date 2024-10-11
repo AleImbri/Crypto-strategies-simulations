@@ -1,0 +1,37 @@
+- Fare una grid search oltre che una random search*
+- Provare a generalizzare la strategia del VA da funzione lineare a funzione polinomiale in cui ci sono diversi coefficienti da aggiustare
+- Provare a generalizzare la strategia del VA reinvestendo ciò che si è guadagnato per comprare nuovi bitcoin, provando a sfruttare l'interesse composto
+- Generare una funzione "prezzo" personalizzata ad hoc in modo che la percentuale di salite sia una data in input (e di conseguenza di discese)
+- Studiare cosa accade in generale al guadagno e a max_delta_neg, oppure a un unico guadagno - max_delta_neg, al variare di una certa variabile (ad esempio tenere tempo_VA fisso a 1, mettere come variabile indipendente e guadagno - max_delta_neg come variabile dipendente, e le altre variabili fissate)
+- Aggiungere una colonna nelle tabelle con date aggregate in cui vedo (guadagno - max_delta_neg) / lunghezza periodo
+- Scoprire qual è il coefficiente ideale della retta per l'obiettivo del VA per una generica funzione
+- Generalizzare ulteriormente la strategia usando queste variabili: sapendo che negli ultimi A giorni il prezzo (o la sua derivata) è calato almeno di B o aumentato almeno di C, comprare D bitcoin o vendere E bitcoin
+- Fare del machine learning per prevedere, in funzione dei dati passati, qual è la migliore strategia (cioè quali sono i valori migliori delle solite variabili, tra cui magari in aggiunta quelle del punto precedente) da usare per massimizzare il guadagno alla fine del periodo dato in input
+- Aggiungere una colonna che rappresenti non il max_delta_neg (che di per sè è spalmato su tutto il periodo), ma il max_delta_neg / lunghezza periodo*
+- Forse bisogna prima deduplicare e poi aggregare nel caso delle date casuali*
+- Provare a simulare sì con una retta come obiettivo, ma con coefficiente variabile nel tempo (quindi di fatto alla fine non sarà una retta)
+- Testare le strategie degli smart trades che ci sono su YP
+- Usare i + e i -
+	- Fare del machine learning
+	- Allocare una percentuale o una quantità del deposito proporzionale alla probabilità data dalla matrice di transizione
+	- Valutare se intraprendere l'azione di entrare o uscire in base a ciò che è successo nei giorni precedenti o se aspettare passivamente che si verifichi una condizione (che sarà quella che massimizza le probabilità trovate) per poi agire di conseguenza
+	- Provare altre strategie per entrare e uscire in base alla matrice di transizione
+	- Provare a calcolare la media pesata usando altri pesi (come ad esempio il numero di occorrenze di una particolare sequenza di + e - anzichè usare come pesi gli ordini)
+	- Pensare a una strategia in cui non uso solo 1 come ordine di arrivo, ma anche ordini maggiori
+	- Usare i + e - per prevedere semplicemente 1 giorno nel futuro (ordine di arrivo pari a 1 quindi) per poi comprare quando si prevede un cambio di trend al rialzo e vendere quando si prevede un cambio di trend al ribasso, testando diversi ordini di partenza
+	- Nel caso dei + e - con ordine di arrivo pari a 1, anzichè assumere che quello che accadrà 1 giorno nel futuro sia sempre quello con la più alta probabilità, lanciare una "moneta" truccata che abbia una distribuzione di probabilità pari alle probabilità in questione (e magari scegliere una soglia minima di % per poter lanciare la moneta, perchè se c'è troppa indecisione, del tipo 55% e 45%, forse vale più la pena aspettare un'occasione in cui lo sbilanciamento è più grande)
+- Mettere insieme il VA e uno o più indicatori per sapere quando attivare e disattivare la vendita o quando cambiare obiettivo o timeframe
+- Provare a scrivere l'andamento del prezzo come serie di Fourier per trovare frequenze di diverse ampiezze e provare a prevedere quindi l'andamento futuro
+- Costruire un dataset con i prezzi del bitcoin e tanti indicatori come colonne da affiancare al prezzo, per poi fare del machine learning che prevede il prezzo a partire dagli indicatori
+- Provare a prevedere i prezzi con pura statistica come con i + e -, approssimando ad esempio ogni prezzo a un numero intero o mettendolo in una classe di prezzi che fanno parte di un certo intervallo di valori, per poi prevedere quali saranno le successive classi
+- Confrontare le performance in % di una strategia calcolando il valore finale del portafoglio e confrontandolo con quello che si avrebbe avuto spendendo la stessa quantità di soldi per comprare tutto nel prezzo minimo che è comparso e rivenderlo tutto nel prezzo massimo che è comparso
+- Testare una strategia di trading in cui si associa una certa percentuale di probabilità al fatto di essere in lateralità o in bullish o in bearish a seconda che siano rimasti costanti o meno il prezzo massimo e minimo degli ultimi N giorni, per poi cambiare strategia di conseguenza
+- Come strategia di vendita, usare una retta obiettivo decrescente a coefficiente variabile, dove il coefficiente diventa più negativo se il prezzo sale in fretta e diventa comunque più negativo se il prezzo scende in fretta
+- Creare un nuovo notebook per simulare cosa succede con più crypto alla volta investite, usando la logica che uso nella realtà
+- Provare a vedere cosa succede se si fa trading semplicemente usando un VA a obiettivo costante con timeframe molto basso e vendita attiva, eventualmente con la differenza che, anzichè acquistare/vendere in base alla differenza con l'obiettivo, si acquista/vende una certa percentuale del capitale/bitcoin posseduto
+- Trading con acquisto e vendita in percentuale usando solo come "guida all'azione" il VA a obiettivo costante con vendita attiva, solo per imitarlo nei momenti in cui compra e vende, comprando e vendendo però una percentuale del capitale o dei bitcoin posseduti*
+- Trading con VA costante e vendita attiva, con l'aggiunta di un controllo che guarda se il prezzo medio pesato delle ultime vendite consecutive è maggiore del prezzo medio pesato degli ultimi acquisti consecutivi; oppure un controllo che guarda più semplicemente se il prezzo a cui sto per vendere è maggiore delle spese effettuate negli ultimi acquisti consecutivi*
+	- Anzichè vendere una percentuale che è funzione della distanza del prezzo attuale dal prezzo minimo, vendere il numero di bitcoin accumulati nell'ultima scia di acquisti (cioè acquisti consecutivi)
+	- Combinare questa idea con quella dei + e - per avere anche un po' di statistica per poter prevedere gli andamenti e quindi comprare e vendere in base alle probabilità date dalla matrice di transizione
+	- Valutare se ha senso calcolare la percentuale di acquisto in base alla differenza percentuale tra il prezzo attuale e il prezzo massimo dato che potrebbero cambiare di molto le cose se l'ordine di grandezza del prezzo è ad esempio intorno a 100000€ o a 10€ per crypto diverse
+- Negli investimenti: dal secondo acquisto in poi, nel caso il prezzo sia sceso, si potrebbe comprare una quantità tale che il nuovo prezzo di acquisto medio pesato diventi una certa quantità, ad esempio diventi pari alla media dei prezzi di acquisto (questo solo per acquisti consecutivi); per la vendita si potrebbe fare qualcosa di analogo magari
