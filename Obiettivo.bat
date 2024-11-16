@@ -1,0 +1,3 @@
+@echo off
+powershell -Command "& {$dataInizio = [datetime]'2024-03-01T12:00:00'; $dataAttuale = Get-Date; $differenza = $dataAttuale - $dataInizio; $giorniTrascorsi = $differenza.TotalDays; $obiettivo = ($giorniTrascorsi+1) * 10; Write-Output ('Il numero di giorni trascorsi dal ' + $dataInizio.ToString('dd/MM/yyyy alle hh:mm') + ' e` ' + $giorniTrascorsi + ', che con un obiettivo di 10 euro al giorno da` ' + $obiettivo + ' euro')}"
+pause
