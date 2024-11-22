@@ -72,7 +72,7 @@ def profit_factor(prices, bitcoin_posseduti):
     if total_losses == 0:
         return float('inf')
     else:
-        return total_gains / total_losses
+        return total_gains / total_losses    
 
 # PnL per singolo trade
 def calcola_pnl(prices, bitcoin_posseduti):
@@ -99,6 +99,80 @@ def calcola_pnl(prices, bitcoin_posseduti):
             bitcoin_posseduti_correnti = bitcoin_correnti
     
     return np.mean(pnl_per_trade)
+
+def calcola_principali_metriche(portfolio_values, prices=None, bitcoin_posseduti=None, risk_free_rate=0.0):
+    """
+    Calcola le principali metriche di performance per un portafoglio.
+    
+    Parametri:
+        - portfolio_values: Serie temporale dei valori del portafoglio.
+        - prices: (opzionale) Serie temporale dei prezzi, necessaria per Profit Factor.
+        - bitcoin_posseduti: (opzionale) Serie temporale della quantità di bitcoin posseduti, necessaria per Profit Factor.
+        - risk_free_rate: Tasso privo di rischio annuale, espresso in percentuale (default 0.0).
+        
+    Restituisce:
+        - Un dizionario con i valori di tutte le metriche calcolate.
+    """
+    risultati = {}
+    
+    # Rendimento Totale
+    try:
+        risultati["Total Return"] = total_return(portfolio_values)
+    except Exception as e:
+        risultati["Total Return"] = f"Errore: {e}"
+    
+    # Max Drawdown
+    try:
+        risultati["Max Drawdown"] = max_drawdown(portfolio_values)
+    except Exception as e:
+        risultati["Max Drawdown"] = f"Errore: {e}"
+    
+    # Volatilità
+    try:
+        risultati["Volatility"] = volatility(portfolio_values)
+    except Exception as e:
+        risultati["Volatility"] = f"Errore: {e}"
+    
+    # Sharpe Ratio
+    try:
+        risultati["Sharpe Ratio"] = sharpe_ratio(portfolio_values, risk_free_rate)
+    except Exception as e:
+        risultati["Sharpe Ratio"] = f"Errore: {e}"
+    
+    # Sortino Ratio
+    try:
+        risultati["Sortino Ratio"] = sortino_ratio(portfolio_values, risk_free_rate)
+    except Exception as e:
+        risultati["Sortino Ratio"] = f"Errore: {e}"
+    
+    # Calmar Ratio
+    try:
+        risultati["Calmar Ratio"] = calmar_ratio(portfolio_values)
+    except Exception as e:
+        risultati["Calmar Ratio"] = f"Errore: {e}"
+    
+    # Profit Factor (richiede prices e bitcoin_posseduti)
+    if prices is not None and bitcoin_posseduti is not None:
+        try:
+            risultati["Profit Factor"] = profit_factor(prices, bitcoin_posseduti)
+        except Exception as e:
+            risultati["Profit Factor"] = f"Errore: {e}"
+    else:
+        risultati["Profit Factor"] = "Non calcolabile: dati insufficienti"
+
+    # PnL (richiede prices e bitconi_posseduti)
+    if prices is not None and bitcoin_posseduti is not None:
+        try:
+            risultati["PnL"] = calcola_pnl(prices, bitcoin_posseduti)
+        except Exception as e:
+            risultati["PnL"] = f"Errore: {e}"
+    else:
+        risultati["Profit Factor"] = "Non calcolabile: dati insufficienti"
+    
+    return risultati
+
+
+
 
 # Alpha
 def alpha(portfolio_values, prices, beta):
