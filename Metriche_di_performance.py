@@ -158,7 +158,7 @@ def calcola_principali_metriche(portfolio_values, prices=None, bitcoin_posseduti
         except Exception as e:
             risultati["Profit Factor"] = f"Errore: {e}"
     else:
-        risultati["Profit Factor"] = "Non calcolabile: dati insufficienti"
+        risultati["Profit Factor"] = "Non calcolabile: dati insufficienti, servono prezzi e quantità di bitcoin posseduti"
 
     # PnL (richiede prices e bitconi_posseduti)
     if prices is not None and bitcoin_posseduti is not None:
@@ -167,7 +167,7 @@ def calcola_principali_metriche(portfolio_values, prices=None, bitcoin_posseduti
         except Exception as e:
             risultati["PnL"] = f"Errore: {e}"
     else:
-        risultati["Profit Factor"] = "Non calcolabile: dati insufficienti"
+        risultati["PnL"] = "Non calcolabile: dati insufficienti, servono prezzi e quantità di bitcoin posseduti"
     
     return risultati
 
