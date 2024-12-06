@@ -117,9 +117,9 @@ def calcola_principali_metriche(portfolio_values, prices=None, bitcoin_posseduti
     
     # Rendimento Totale
     try:
-        risultati["Total Return"] = total_return(portfolio_values)
+        risultati["Total Return %"] = total_return(portfolio_values)
     except Exception as e:
-        risultati["Total Return"] = f"Errore: {e}"
+        risultati["Total Return %"] = f"Errore: {e}"
     
     # Max Drawdown
     try:
