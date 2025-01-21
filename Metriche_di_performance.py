@@ -123,7 +123,7 @@ def calcola_principali_metriche(portfolio_values, prices=None, bitcoin_posseduti
     
     # Max Drawdown
     try:
-        risultati["Max Drawdown"] = max_drawdown(portfolio_values)
+        risultati["Max Drawdown %"] = max_drawdown(portfolio_values)
     except Exception as e:
         risultati["Max Drawdown"] = f"Errore: {e}"
     
